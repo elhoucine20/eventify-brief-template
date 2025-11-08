@@ -68,7 +68,7 @@ form.addEventListener("submit", (e) => {
 });
 
     // add total(event,seats,prix)
-    alert("fin du form");
+    // alert("fin du form");
     let totalevent = document.getElementById('stat-total-events');
     let toatlseats = document.getElementById('stat-total-seats');
     let totalrevenu = document.getElementById('stat-total-price');
@@ -79,7 +79,7 @@ form.addEventListener("submit", (e) => {
     // input seats
     let seats=document.getElementById('event-seats');
     let price=document.getElementById('event-price');
-    alert("add event 1");
+    // alert("add event 1");
     btncreateevent.addEventListener('click', function () {
     alert("add event 2");
 
