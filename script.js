@@ -98,7 +98,3 @@ form.addEventListener("submit", (e) => {
     alert("add event 2");
  
   });
-
-  
-  
-
