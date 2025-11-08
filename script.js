@@ -9,11 +9,9 @@ function screenlesSection(index) {
         let sectionstatus=section.dataset.screen;
         if (sectionstatus === datasection) {
             section.classList.add('is-visible')
-
             //localStorage
             localStorage.setItem('datasection',sectionstatus);
         }
-
     });
     btns.forEach(btn => {
         btn.classList.remove("is-active")
@@ -24,13 +22,8 @@ function screenlesSection(index) {
             //localStorage
             localStorage.setItem('btnstatus',databtns);
         }
-
-       
     });
-
 }
-
-//// form valiudatin
 const form = document.querySelector("form");
 form.addEventListener("submit", (e) => {
    e.preventDefault();
@@ -46,7 +39,6 @@ form.addEventListener("submit", (e) => {
   const description = document.querySelector("#event-description").value;
   const nombrseats = document.querySelector("#event-seats").value;
   const prixbase = document.querySelector("#event-price").value;
-
   if (!regextitle.test(title)) {
     alert("saisir title");
   }
@@ -70,6 +62,5 @@ form.addEventListener("submit", (e) => {
   }
   form.reset();
 });
-
 
 
