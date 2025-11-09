@@ -1,3 +1,6 @@
+
+  let events = [];
+  let archevs = [];
 // switch entre les buttons et les sections
 let toutsSections = document.querySelectorAll('.screen');
 let btns = document.querySelectorAll('.sidebar__btn');
@@ -50,7 +53,6 @@ form.addEventListener("submit", (e) => {
     alert("saisir url");
   }
 
-
   if (!regexdescription.test(description)) {
     alert("saisir description");
   }
@@ -63,13 +65,30 @@ form.addEventListener("submit", (e) => {
   if (!regexprixbase.test(prixbase)) {
     alert("saisir le prix");
   }
-
+let Dataa = {
+  title: title,
+  imagee: imageurl,
+  discripetion: description,
+  seatss: nombrseats,
+  prixx: prixbase,
+}   
+     console.log(Dataa);
+     events.push(Dataa);
+     console.log(events);
+     listevents();
   form.reset();
+
+ 
+
+
 });
+  
+
 
     // add total(event,seats,prix)
     // alert("fin du form");
-    let totalevent = document.getElementById('stat-total-events');
+
+   let totalevent = document.getElementById('stat-total-events');
     let toatlseats = document.getElementById('stat-total-seats');
     let totalrevenu = document.getElementById('stat-total-price');
     let TOTALEVENTS = Number(totalevent.textContent);
@@ -86,15 +105,72 @@ form.addEventListener("submit", (e) => {
       // events
     ++TOTALEVENTS;
     totalevent.innerHTML=TOTALEVENTS;
-
     // seats
     TOTALSEATS += Number( seats.value);
     toatlseats.innerHTML=TOTALSEATS;
-
     // revenu
     TOTALREVENU+= Number(price.value);
     totalrevenu.innerHTML="$"+ TOTALREVENU;
-    
     alert("add event 2");
- 
   });
+    alert("start1");
+
+  // affichie list des events
+  
+    alert("start2");
+
+
+// list des events 
+function listevents() {
+  const tbody=document.querySelector(".table__body");
+  let cntrevent=1;
+  tbody.innerHTML="";
+  events.forEach(event => {
+    tbody.innerHTML+=`
+    <tr class="table__row" >
+        <td>${cntrevent++}</td>
+        <td>${event.title}</td>
+        <td>${event.seatss}</td>
+        <td><span class="badge">$${event.prixx}</span></td>
+        <td>${contrVaraint}</td>
+
+        <td>
+          <button class="btn btn--small" data-action="details" onclick=('deletetable()') data-event-id="1">Details</button>
+          <button class="btn btn--small" data-action="edit" data-event-id="1">Edit</button>
+          <button class="btn btn--danger btn--small" data-action="archive" class="deletet" data-event-id="1">Delete</button>
+        </td>
+    </tr>`
+  });
+}
+    alert("final");
+
+/// add varaint
+let contrVaraint=0;
+function ListVaraint(){
+  contrVaraint++;
+const varaintList=document.querySelector('.variants__list');
+varaintList.innerHTML +=`
+<div class="variant-row">
+   <input type="text" class="input variant-row__name" placeholder="Variant name (e.g., 'Early Bird')" />
+   <input type="number" class="input variant-row__qty" placeholder="Qty" min="1" />
+   <input type="number" class="input variant-row__value" placeholder="Value" step="0.01" />
+   <select class="select variant-row__type">
+   <option value="fixed">Fixed Price</option>
+   <option value="percentage">Percentage Off</option>
+   </select>
+   <button  type="button" class="btn btn--danger btn--small variant-row__remove" onclick="removebtnDIV(this)">Remove</button>
+</div>
+`
+const removeVaraint=document.querySelector('.variant-row__remove');
+  
+console.log('zid2');
+
+}
+
+function removebtnDIV(btn){
+  contrVaraint--;
+  let BTNREMOVE=btn.closest('.variant-row');
+  BTNREMOVE.remove();
+}
+
+
