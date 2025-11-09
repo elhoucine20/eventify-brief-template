@@ -53,7 +53,6 @@ form.addEventListener("submit", (e) => {
     alert("saisir url");
   }
 
-
   if (!regexdescription.test(description)) {
     alert("saisir description");
   }
@@ -78,13 +77,18 @@ let Dataa = {
      console.log(events);
      listevents();
   form.reset();
+
+ 
+
+
 });
   
 
 
     // add total(event,seats,prix)
     // alert("fin du form");
-    let totalevent = document.getElementById('stat-total-events');
+
+   let totalevent = document.getElementById('stat-total-events');
     let toatlseats = document.getElementById('stat-total-seats');
     let totalrevenu = document.getElementById('stat-total-price');
     let TOTALEVENTS = Number(totalevent.textContent);
@@ -109,7 +113,6 @@ let Dataa = {
     totalrevenu.innerHTML="$"+ TOTALREVENU;
     alert("add event 2");
   });
-
     alert("start1");
 
   // affichie list des events
@@ -117,7 +120,7 @@ let Dataa = {
     alert("start2");
 
 
-
+// list des events 
 function listevents() {
   const tbody=document.querySelector(".table__body");
   let cntrevent=1;
@@ -128,14 +131,15 @@ function listevents() {
         <td>${cntrevent++}</td>
         <td>${event.title}</td>
         <td>${event.seatss}</td>
-        <td><span class="badge">${event.prixx}</span></td>
+        <td><span class="badge">$${event.prixx}</span></td>
         <td>
           <button class="btn btn--small" data-action="details" onclick=('deletetable()') data-event-id="1">Details</button>
           <button class="btn btn--small" data-action="edit" data-event-id="1">Edit</button>
-          <button class="btn btn--danger btn--small" data-action="archive" data-event-id="1">Delete</button>
+          <button class="btn btn--danger btn--small" data-action="archive" class="deletet" data-event-id="1">Delete</button>
         </td>
     </tr>`
   });
 }
     alert("final");
+
 
