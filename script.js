@@ -169,7 +169,9 @@ function Edit(index) {
 }
 
 // console.log('detals1');
+
 // details
+
 const modal = document.querySelector('.modal');
 function Details(index) {
   modal.classList.remove('is-hidden');
