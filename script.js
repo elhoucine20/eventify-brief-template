@@ -4,17 +4,18 @@ let archeve = [];
 // switch entre les buttons et les sections
 let toutsSections = document.querySelectorAll('.screen');
 let btns = document.querySelectorAll('.sidebar__btn');
-const headerr = document.getElementById('page-title');
+const title = document.getElementById('page-title');
 function screenlesSection(index) {
   toutsSections.forEach(section => {
     section.classList.remove('is-visible')
-    const datasection = index.dataset.screen;
+    let datasection = index.dataset.screen;
     let sectionstatus = section.dataset.screen;
     if (sectionstatus === datasection) {
       section.classList.add('is-visible')
       //localStorage
       localStorage.setItem('datasection', sectionstatus);
     }
+
   });
   btns.forEach(btn => {
     btn.classList.remove("is-active")
@@ -26,9 +27,28 @@ function screenlesSection(index) {
       localStorage.setItem('btnstatus', databtns);
     }
   });
+
+  // verification de title
+  if (index.dataset.screen === "stats") {
+    title.textContent = "statistique";
+    // subtitle.textContent = "Overview of your events";
+  } else if (index.dataset.screen === "add") {
+    title.textContent = "Add event";
+    // subtitle.textContent = "Overview of your events";
+
+  } else if (index.dataset.screen === "list") {
+    title.textContent = "Events";
+    // subtitle.textContent = "Overview of your events";
+
+  } else if (index.dataset.screen === "archive") {
+    title.textContent = "Archive";
+    // subtitle.textContent = "Overview of your events";
+
+  }
 }
 
 // validation du form
+
 let form = document.querySelector("form");
 let btncreateevent = document.querySelector(".btn--primary");
 let btnclear = document.querySelector(".btn--ghost");
@@ -64,6 +84,7 @@ form.addEventListener("submit", (e) => {
   if (!regexprixbase.test(prixbase)) {
     alert("saisir le prix");
   }
+  // stocke data
   let Dataa = {
     title: title,
     imagee: imageurl,
@@ -71,9 +92,9 @@ form.addEventListener("submit", (e) => {
     seatss: nombrseats,
     prixx: prixbase,
   }
-  console.log(Dataa);
+  // console.log(Dataa);
   events.push(Dataa);
-  console.log(events);
+  // console.log(events);
   listevents();
   form.reset();
 });
@@ -81,6 +102,7 @@ form.addEventListener("submit", (e) => {
 
 
 // add total(event,seats,prix)
+
 let totalevent = document.getElementById('stat-total-events');
 let toatlseats = document.getElementById('stat-total-seats');
 let totalrevenu = document.getElementById('stat-total-price');
@@ -92,68 +114,82 @@ let TOTALREVENU = Number(totalrevenu.textContent);
 let seats = document.getElementById('event-seats');
 let price = document.getElementById('event-price');
 // alert("add event 1");
-btncreateevent.addEventListener('click', function () {
+function Statistique() {
+  btncreateevent.addEventListener('click', function () {
 
-  // events
-  ++TOTALEVENTS;
-  totalevent.innerHTML = TOTALEVENTS;
-  // seats
-  TOTALSEATS += Number(seats.value);
-  toatlseats.innerHTML = TOTALSEATS;
-  // revenu
-  TOTALREVENU += Number(price.value);
-  totalrevenu.innerHTML = "$" + TOTALREVENU;
-});
-console.log('detals0');
+    // events
+    ++TOTALEVENTS;
+    totalevent.innerHTML = TOTALEVENTS;
+    // seats
+    TOTALSEATS += Number(seats.value);
+    toatlseats.innerHTML = TOTALSEATS;
+    // revenu
+    TOTALREVENU += Number(price.value);
+    totalrevenu.innerHTML = TOTALREVENU;
+
+  });
+}
+Statistique();
+
+
+// console.log('detals0');
 
 // list des events 
 function listevents() {
   const tbody = document.querySelector(".table__body");
-  let cntrevent = 1;
+  var cntrevent = 0;
   tbody.innerHTML = "";
   events.forEach(event => {
     tbody.innerHTML += `
     <tr class="table__row" >
-        <td>${cntrevent++}</td>
+        <td>${++cntrevent}</td>
         <td>${event.title}</td>
         <td>${event.seatss}</td>
         <td><span class="badge">$${event.prixx}</span></td>
         <td>${contrVaraint}</td>
-
+   
         <td>
-          <button class="btn btn--small" data-action="details" onclick="Details()"  data-event-id="1">Details</button>
-          <button class="btn btn--small" data-action="edit" data-event-id="1">Edit</button>
-          <button class="btn btn--danger btn--small" data-action="archive" class="deletet" data-event-id="1" onclick="DELETEevent(this)">Delete</button>
+          <button class="btn btn--small" data-action="details" onclick="Details(${cntrevent})"  data-event-id="1">Details</button>
+          <button class="btn btn--small" data-action="edit" data-event-id="1" onclick="Edit(${cntrevent})">Edit</button>
+          <button class="btn btn--danger btn--small" data-action="archive" class="deletet" data-event-id="1" onclick="DELETEevent(${cntrevent}),listeArchive()" >Delete</button>
         </td>
     </tr>`
   });
 }
-console.log('detals1');
+// Edit()
+function Edit(index) {
+  // const index = btn - 1;
+  const evv = events[index-1];
+  title = evv.title;
+  imageurl = evv.imagee;
+  description = evv.discription;
+  nombrseats = evv.seatss;
+  prixbase = evv.prixx;
+  
+}
+
+// console.log('detals1');
 // details
 const modal = document.querySelector('.modal');
 function Details(index) {
   modal.classList.remove('is-hidden');
-  const ditals = document.querySelector('.modal__body');
-  events.forEach(event => {
-  ditals.innerHTML = `
-  <h1>TITLE :${event.title}</h1>
-  <p>description:${event.discription}</p>
-  <p>seats: ${event.seatss}</p>
-  <p>price: ${event.prixx}</p>
+  const modal_body = document.querySelector('.modal__body');
+  const evv = events[index - 1];
+  // events.forEach(event => {
+  modal_body.innerHTML = `
+  <h1>TITLE :${evv.title}</h1>
+  <p>description:${evv.discription}</p>
+  <p>seats: ${evv.seatss}</p>
+  <p>price: ${evv.prixx}$</p>
 `
-  })
+  // })
 }
-console.log('detals10');
+// console.log('detals10');
 
 
-
-
-
-
-
-
+// close modal
 function closemodal() {
-  const modaldiv=document.querySelector(".modal")
+  const modaldiv = document.querySelector(".modal")
   modal.classList.add('is-hidden');
 }
 
@@ -174,11 +210,13 @@ function ListVaraint() {
    <button  type="button" class="btn btn--danger btn--small variant-row__remove" onclick="removebtnDIV(this)">Remove</button>
 </div>
 `
-  // const removeVaraint = document.querySelector('.variant-row__remove');
-  // console.log('zid2');
-
 }
-console.log(events);
+// console.log(events);
+
+
+
+
+
 //   btn remove varaint
 function removebtnDIV(btn) {
   contrVaraint--;
@@ -186,27 +224,72 @@ function removebtnDIV(btn) {
   BTNREMOVE.remove();
 }
 // delete event
-function DELETEevent(event) {
-  const delett = event.closest('.table__row');
-  delett.remove();
-  events.splice(event,1);
-  archeve.push(delett);
+function DELETEevent(btn) {
+  const index = btn - 1;
+  var removed = events.splice(index, 1)[0];
+  archeve.push(removed);
+  listeArchive();
+  listevents();
+  // new total events
+  --TOTALEVENTS;
+  totalevent.innerHTML = TOTALEVENTS;
+  // new total seats
+  TOTALSEATS = TOTALSEATS - removed.seatss;
+  toatlseats.innerHTML = TOTALSEATS;
+  console.log('seats ');
+  console.log(TOTALSEATS);
+  // new total revenu
+  TOTALREVENU = TOTALREVENU - removed.prixx;
+  totalrevenu.innerHTML = TOTALREVENU + "$";
+  console.log('prix ');
+  console.log(TOTALREVENU);
+
+  console.log("removed");
+  console.log(removed);
+
+}
+// lestArchive
+function listeArchive() {
+  const tbody = document.querySelectorAll(".table__body")[1];
+  // if(!tbody) return;
+  let cntrevent = 0;
+  tbody.innerHTML = "";
+  archeve.forEach(event => {
+    tbody.innerHTML += `
+         <tr class="table__row" >
+               <td>${++cntrevent}</td>
+               <td>${event.title}</td>
+               <td>${event.seatss}</td>
+              <td>${event.prixx}$</td>
+              <td>${event.contrVaraint || 0}</td>
+              <td>
+                <button class="btn btn--small" data-action="restore" onclick="restorEvent(${cntrevent})" data-event-id="1">Restore</button>
+               </td>
+         </tr>`
+  });
 }
 
+// restor event
+function restorEvent(btnn) {
+  const index = btnn - 1;
+  const restored = archeve.splice(index, 1)[0];
+  events.push(restored);
+  listeArchive();
+  listevents();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // new total events
+  ++TOTALEVENTS;
+  totalevent.innerHTML = TOTALEVENTS;
+  // new total seats
+  TOTALSEATS = TOTALSEATS + Number(restored.seatss);
+  toatlseats.innerHTML = TOTALSEATS;
+  console.log('seats ');
+  console.log(TOTALSEATS);
+  // new total revenu
+  TOTALREVENU = TOTALREVENU + Number(restored.prixx);
+  totalrevenu.innerHTML = TOTALREVENU + "$";
+  console.log('prix ');
+  console.log(TOTALREVENU);
+}
 
 
