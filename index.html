@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events Management App</title>
+    <title>Events Management App </title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -34,7 +34,7 @@
 
                 <button onclick="screenlesSection(this)" class="sidebar__btn" data-screen="archive">
                     <span class="sidebar__icon">🗄️</span>
-                    <span class="sidebar__label">Archive</span>
+                    <span  class="sidebar__label">Archive</span>
                 </button>
             </nav>
 
@@ -156,7 +156,7 @@
                             <fieldset class="variants">
                                 <legend class="variants__title">
                                     Pricing Variants (Optional)
-                                    <button type="button" class="btn btn--small" id="btn-add-variant">+ Add Variant</button>
+                                    <button onclick="ListVaraint()" type="button" class="btn btn--small" id="btn-add-variant">+ Add Variant</button>
                                 </legend>
                                 
                                 <!-- Variant rows will be appended here by JS -->
@@ -179,8 +179,9 @@
 
                             <!-- Submit Button -->
                             <div class="form__actions">
-                                <button type="submit" class="btn btn--primary">Create Event</button>
+                                <button  type="submit"  class="btn btn--primary">Create Event</button>
                                 <button type="reset" class="btn btn--ghost">Clear</button>
+                                <!-- <button type="reset" class="btn btn--ghost">Done</button> -->
                             </div>
                         </form>
                     </div>
@@ -221,7 +222,7 @@
                             <tbody class="table__body">
                                 <!-- EXAMPLE: Students will populate this with JS -->
                                 <!-- 
-                                <tr class="table__row" data-event-id="1">
+                                <tr class="event-modal" data-event-id="1">
                                     <td>1</td>
                                     <td>Summer Festival</td>
                                     <td>100</td>
@@ -260,7 +261,7 @@
                             <tbody class="table__body">
                                 <!-- EXAMPLE: Students will populate this with JS -->
                                 <!-- 
-                                <tr class="table__row" data-event-id="1">
+                                <tr class="#event-modal" data-event-id="1">
                                     <td>1</td>
                                     <td>Old Event</td>
                                     <td>50</td>
@@ -285,7 +286,7 @@
         <div class="modal__content">
             <header class="modal__header">
                 <h3 class="modal__title" id="modal-title">Event Details</h3>
-                <button class="modal__close" data-action="close-modal">&times;</button>
+                <button class="modal__close" onclick="closemodal()" data-action="close-modal">&times;</button>
             </header>
             <div class="modal__body" id="modal-body">
                 <!-- Content populated by JS -->
