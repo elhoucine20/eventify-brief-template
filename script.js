@@ -155,12 +155,12 @@ function listevents() {
 // search
 function search() {
   const input = document.querySelector('#search-events');
-  const tabll = document.querySelectorAll('.table__row');
-  input.addEventListener('input', evx => {
-    let xxx = evx.target.value.toLowerCase();
-    tabll.forEach(eventt => {
-      const td = eventt.querySelector('.table_row');
-      if (td.textContent.toLowerCase().includes(xxx)) {
+  const tr = document.querySelectorAll('.table__row');
+  input.addEventListener('input', event => {
+    let inputValue = event.target.value.toLowerCase();
+    tr.forEach(eventt => {
+      const titre = eventt.querySelector('.table_row');
+      if (titre.textContent.toLowerCase().includes(inputValue)) {
         eventt.style.display = "table-row";
       } else {
         eventt.style.display = "none";
