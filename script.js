@@ -10,6 +10,7 @@ function screenlesSection(index) {
     let datasection = index.dataset.screen;
     let sectionstatus = section.dataset.screen;
     if (sectionstatus === datasection) {
+      
       section.classList.add('is-visible')
       //localStorage
       localStorage.setItem('datasection', sectionstatus);
