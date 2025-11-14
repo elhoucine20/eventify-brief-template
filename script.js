@@ -1,4 +1,3 @@
-
 let events = [];
 let archeve = [];
 // switch entre les buttons et les sections
@@ -15,11 +14,10 @@ function screenlesSection(index) {
       //localStorage
       localStorage.setItem('datasection', sectionstatus);
     }
-
   });
   btns.forEach(btn => {
     btn.classList.remove("is-active")
-    const databtns = index.dataset.screen;
+    databtns = index.dataset.screen;
     let btnstatus = btn.dataset.screen;
     if (btnstatus === databtns) {
       btn.classList.add("is-active");
@@ -76,7 +74,6 @@ form.addEventListener("submit", (e) => {
     alert("saisir description");
   }
 
-
   if (!regexnombrseats.test(nombrseats)) {
     alert("saisir nombre seats");
   }
@@ -99,10 +96,7 @@ form.addEventListener("submit", (e) => {
   form.reset();
 });
 
-
-
 // add total(event,seats,prix)
-
 let totalevent = document.getElementById('stat-total-events');
 let toatlseats = document.getElementById('stat-total-seats');
 let totalrevenu = document.getElementById('stat-total-price');
@@ -143,7 +137,7 @@ function listevents() {
     tbody.innerHTML += `
     <tr class="table__row" >
         <td>${++cntrevent}</td>
-        <td>${event.title}</td>
+        <td class="table_row">${event.title}</td>
         <td>${event.seatss}</td>
         <td><span class="badge">$${event.prixx}</span></td>
         <td>${contrVaraint}</td>
@@ -155,17 +149,65 @@ function listevents() {
         </td>
     </tr>`
   });
+  search();
+}
+// search
+function search() {
+  const input = document.querySelector('#search-events');
+  const tabll = document.querySelectorAll('.table__row');
+  input.addEventListener('input', evx => {
+    let xxx = evx.target.value.toLowerCase();
+    tabll.forEach(eventt => {
+      const td = eventt.querySelector('.table_row');
+      if (td.textContent.toLowerCase().includes(xxx)) {
+        eventt.style.display = "table-row";
+      } else {
+        eventt.style.display = "none";
+      }
+    });
+  })
+  // console.log(tabll);
+  // console.log(xxx);
 }
 // Edit()
 function Edit(index) {
+  // console.log(index);
   // const index = btn - 1;
-  const evv = events[index-1];
-  title = evv.title;
-  imageurl = evv.imagee;
-  description = evv.discription;
-  nombrseats = evv.seatss;
-  prixbase = evv.prixx;
-  
+  const evv = events[index - 1];
+
+  // console.log(evv);
+  document.querySelector("#event-title").value = evv.title;
+  document.querySelector("#event-image").value = evv.imagee;
+  document.querySelector("#event-description").value = evv.discription;
+  document.querySelector("#event-seats").value = evv.seatss;
+  document.querySelector("#event-price").value = evv.prixx;
+  const s = document.querySelector('button[data-screen="add"]')
+  screenlesSection(s);
+  const btncreatevent = document.querySelector('.btn--primary');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    btncreatevent.addEventListener('submit', function () {
+      evv.title = document.querySelector("#event-title").value;
+      evv.imagee = document.querySelector("#event-image").value;
+      evv.discription = document.querySelector("#event-description").value;
+      evv.seatss = document.querySelector("#event-seats").value;
+      evv.prixx = document.querySelector("#event-price").value;
+    });
+  })
+
+  events.splice(evv, 1)[0];
+
+    --TOTALEVENTS;
+  totalevent.innerHTML = TOTALEVENTS;
+  // new total seats
+  TOTALSEATS = TOTALSEATS - evv.seatss;
+  toatlseats.innerHTML = TOTALSEATS;
+  // console.log('seats ');
+  // console.log(TOTALSEATS);
+  // new total revenu
+  TOTALREVENU = TOTALREVENU - evv.prixx;
+  totalrevenu.innerHTML = TOTALREVENU + "$";
+  // console.log('prix ');
 }
 
 // console.log('detals1');
@@ -187,8 +229,6 @@ function Details(index) {
   // })
 }
 // console.log('detals10');
-
-
 // close modal
 function closemodal() {
   const modaldiv = document.querySelector(".modal")
@@ -215,10 +255,6 @@ function ListVaraint() {
 }
 // console.log(events);
 
-
-
-
-
 //   btn remove varaint
 function removebtnDIV(btn) {
   contrVaraint--;
@@ -238,18 +274,19 @@ function DELETEevent(btn) {
   // new total seats
   TOTALSEATS = TOTALSEATS - removed.seatss;
   toatlseats.innerHTML = TOTALSEATS;
-  console.log('seats ');
-  console.log(TOTALSEATS);
+  // console.log('seats ');
+  // console.log(TOTALSEATS);
   // new total revenu
   TOTALREVENU = TOTALREVENU - removed.prixx;
   totalrevenu.innerHTML = TOTALREVENU + "$";
-  console.log('prix ');
-  console.log(TOTALREVENU);
+  // console.log('prix ');
+  // console.log(TOTALREVENU);
 
-  console.log("removed");
-  console.log(removed);
+  // console.log("removed");
+  // console.log(removed);
 
 }
+
 // lestArchive
 function listeArchive() {
   const tbody = document.querySelectorAll(".table__body")[1];
@@ -258,7 +295,7 @@ function listeArchive() {
   tbody.innerHTML = "";
   archeve.forEach(event => {
     tbody.innerHTML += `
-         <tr class="table__row" >
+         <tr class="search" >
                <td>${++cntrevent}</td>
                <td>${event.title}</td>
                <td>${event.seatss}</td>
@@ -285,13 +322,13 @@ function restorEvent(btnn) {
   // new total seats
   TOTALSEATS = TOTALSEATS + Number(restored.seatss);
   toatlseats.innerHTML = TOTALSEATS;
-  console.log('seats ');
-  console.log(TOTALSEATS);
+  // console.log('seats ');
+  // console.log(TOTALSEATS);
   // new total revenu
   TOTALREVENU = TOTALREVENU + Number(restored.prixx);
   totalrevenu.innerHTML = TOTALREVENU + "$";
-  console.log('prix ');
-  console.log(TOTALREVENU);
+  // console.log('prix ');
+  // console.log(TOTALREVENU);
 }
 
 
